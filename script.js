@@ -1,29 +1,32 @@
 const form = document.getElementById("presence-form");
-const scriptURL = "https://script.google.com/macros/s/AKfycbyORwdGRehK9_cehM_d68U_YXv4t0V8y4-BiMOzNWp8d22eXx1wnUuS7k5Dr0yfrOTo/exec";
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const formData = new FormData(form); // cria objeto FormData do formulário
+  const nome = document.getElementById("name").value.trim();
+  if(!nome) return;
 
-  fetch(scriptURL, {
+  const formData = new FormData(form);
+
+  fetch(form.action, {
     method: "POST",
-    body: formData
+    body: formData,
+    headers: { 'Accept': 'application/json' }
   })
-    .then(response => response.json())
-    .then(data => {
-      if(data.status === "ok") {
-        alert("Presença confirmada!");
-        form.reset();
+  .then(response => {
+    if (response.ok) {
+      alert("Presença confirmada!");
+      
+      // Adiciona na lista local
+      const ul = document.getElementById("name-list");
+      const li = document.createElement("li");
+      li.textContent = nome;
+      ul.appendChild(li);
 
-        // Atualiza lista local na página
-        const ul = document.getElementById("name-list");
-        const li = document.createElement("li");
-        li.textContent = document.getElementById("name").value;
-        ul.appendChild(li);
-      } else {
-        alert("Erro: " + data.mensagem);
-      }
-    })
-    .catch(err => alert("Erro ao registrar: " + err));
+      form.reset();
+    } else {
+      alert("Erro ao registrar presença.");
+    }
+  })
+  .catch(err => alert("Erro ao registrar: " + err));
 });
