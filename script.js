@@ -1,5 +1,5 @@
 const form = document.getElementById("presence-form");
-const scriptURL = "https://script.google.com/macros/s/AKfycbww3LFITmoMmivRzxYgBtGfakDqM3JBBOuvebJ2ppqt4kMWzUwSlNgzE1vFD_D8dx0/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbyORwdGRehK9_cehM_d68U_YXv4t0V8y4-BiMOzNWp8d22eXx1wnUuS7k5Dr0yfrOTo/exec";
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -8,14 +8,22 @@ form.addEventListener("submit", (e) => {
 
   fetch(scriptURL, {
     method: "POST",
-    body: formData // envia como POST nativo
+    body: formData
   })
-    .then(response => response.text())
-    .then((result) => {
-      alert("Presença confirmada!");
-      form.reset();
+    .then(response => response.json())
+    .then(data => {
+      if(data.status === "ok") {
+        alert("Presença confirmada!");
+        form.reset();
+
+        // Atualiza lista local na página
+        const ul = document.getElementById("name-list");
+        const li = document.createElement("li");
+        li.textContent = document.getElementById("name").value;
+        ul.appendChild(li);
+      } else {
+        alert("Erro: " + data.mensagem);
+      }
     })
-    .catch(error => {
-      alert("Erro ao registrar: " + error);
-    });
+    .catch(err => alert("Erro ao registrar: " + err));
 });
