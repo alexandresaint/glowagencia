@@ -1,0 +1,122 @@
+/* ======= ESTILO GERAL ======= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f7f5f8;
+  color: #2b1c3d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* ======= CONTAINER ======= */
+.container {
+  background: #fff;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* ======= HEADER ======= */
+header .logo {
+  width: 120px;
+  margin-bottom: 10px;
+}
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  color: #4C2A69;
+  font-size: 2em;
+  margin-bottom: 5px;
+}
+
+header p {
+  color: #6d5c82;
+  font-size: 0.95em;
+  margin-bottom: 25px;
+}
+
+/* ======= FORM ======= */
+form {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+input {
+  flex: 1;
+  padding: 10px 15px;
+  border: 2px solid #cdb6e1;
+  border-radius: 8px;
+  font-size: 1em;
+  outline: none;
+  transition: 0.3s;
+}
+
+input:focus {
+  border-color: #4C2A69;
+}
+
+button {
+  background: #4C2A69;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #351c4a;
+}
+
+/* ======= LISTA ======= */
+.list-container {
+  text-align: left;
+}
+
+.list-container h2 {
+  color: #4C2A69;
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 10px;
+}
+
+#name-list {
+  list-style: none;
+  max-height: 250px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+#name-list li {
+  background: #f0e7f8;
+  margin-bottom: 8px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  color: #2b1c3d;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ======= FOOTER ======= */
+footer {
+  margin-top: 30px;
+  font-size: 0.85em;
+  color: #8b7a9f;
+}
