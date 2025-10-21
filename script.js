@@ -1,40 +1,18 @@
-// Pega os elementos do HTML
-const form = document.getElementById('presence-form');
-const nameInput = document.getElementById('name');
-const nameList = document.getElementById('name-list');
+const scriptURL = "https://script.google.com/macros/s/AKfycbww3LFITmoMmivRzxYgBtGfakDqM3JBBOuvebJ2ppqt4kMWzUwSlNgzE1vFD_D8dx0/exec";
 
-// Função para adicionar nome
-form.addEventListener('submit', function(e) {
+document.getElementById("formPresenca").addEventListener("submit", (e) => {
   e.preventDefault();
+  const nome = document.getElementById("nome").value;
 
-  const name = nameInput.value.trim();
-  if (name === '') return;
-
-  // Adiciona o nome à lista na tela
-  const li = document.createElement('li');
-  li.textContent = name;
-  nameList.appendChild(li);
-
-  // Salva no LocalStorage (temporário)
-  saveName(name);
-
-  // Limpa o campo
-  nameInput.value = '';
+  fetch(scriptURL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ nome }),
+  })
+    .then((res) => res.text())
+    .then((msg) => {
+      alert("Presença confirmada!");
+      document.getElementById("nome").value = "";
+    })
+    .catch((err) => alert("Erro ao registrar: " + err.message));
 });
-
-// Salvar nomes localmente (teste inicial)
-function saveName(name) {
-  const stored = JSON.parse(localStorage.getItem('presencaGlow')) || [];
-  stored.push(name);
-  localStorage.setItem('presencaGlow', JSON.stringify(stored));
-}
-
-// Carrega nomes ao abrir a página
-window.onload = function() {
-  const stored = JSON.parse(localStorage.getItem('presencaGlow')) || [];
-  stored.forEach(name => {
-    const li = document.createElement('li');
-    li.textContent = name;
-    nameList.appendChild(li);
-  });
-};
